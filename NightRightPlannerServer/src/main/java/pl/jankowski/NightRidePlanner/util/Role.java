@@ -3,7 +3,7 @@ package pl.jankowski.NightRidePlanner.util;
 import lombok.Getter;
 
 public enum Role {
-    ADMINISTRATOR("ADMINISTRATOR"), USER("USER");
+    ADMINISTRATOR("ROLE_ADMINISTRATOR"), USER("ROLE_USER");
 
     @Getter
     private String roleValue;

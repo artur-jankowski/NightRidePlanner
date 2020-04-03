@@ -68,7 +68,7 @@ public class UserService {
         if (userOptional.isPresent()) {
             UserDetailsEntity details = userOptional.get().getUserInfo();
             if (details.getPassword().equals(oldPassword)) {
-                details.setPassword(newPassword);
+                details.setPassword(passwordEncoder.encode(newPassword));
                 userDetailsRepository.save(details);
                 return true;
             }
@@ -89,4 +89,4 @@ public class UserService {
         }
         return false;
     }
-}
+    }

@@ -1,6 +1,7 @@
 package pl.jankowski.NightRidePlanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ public class EventController {
     private GroupRepository groupRepository;
 
     @PostMapping(value = "/create")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public @ResponseBody EventEntity createEvent(@RequestBody long groupId, @RequestBody EventEntity event) {
         Optional<GroupEntity> groupOptional = groupRepository.findById(groupId);
         if(groupOptional.isPresent()) {
