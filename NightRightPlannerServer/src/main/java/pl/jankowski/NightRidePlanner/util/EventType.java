@@ -1,0 +1,5 @@
+package pl.jankowski.NightRidePlanner.util;
+
+public enum EventType {
+    RACE, PERFORMANCE_RACE, TOUGE, NIGHT_RIDE, CHARITY_MEET, GENERAL_MEET, BRAND_MEET, CLASSICS_MEET, RICH_MEET, DINE_AND_DRIVE
+}

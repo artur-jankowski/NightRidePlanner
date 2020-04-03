@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+
+security:
+  jwt:
+    token:
+      secret-key: this-is-some-really-secret-key
+      expiration: 1209600000
