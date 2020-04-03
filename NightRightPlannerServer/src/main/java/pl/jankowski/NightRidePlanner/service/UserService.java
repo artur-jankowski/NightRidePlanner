@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import pl.jankowski.NightRidePlanner.entity.UserDetailsEntity;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.repository.UserDetailsRepository;
@@ -29,15 +32,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public UserEntity getUser(long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElse(null);
     }
 
 
     public UserEntity createUser(String username, String password) {
         UserEntity user = new UserEntity();
         UserDetailsEntity userDetails = new UserDetailsEntity();
-        userDetails.setPassword(password);
+        userDetails.setPassword(passwordEncoder.encode(password));
         user.setUserInfo(userDetails);
         user.setUsername(username);
         userDetails.addRole(Role.USER);

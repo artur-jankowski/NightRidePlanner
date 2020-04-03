@@ -23,13 +23,13 @@ import static org.springframework.http.HttpMethod.POST;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(POST, "/createUser").permitAll()
-                .antMatchers(GET, "/login").permitAll()
+                .antMatchers(POST, "/createUser").anonymous()
+                .antMatchers(GET, "/login").anonymous()
                 .antMatchers(GET, "/").permitAll()
                 .anyRequest().permitAll();
 
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/**");
+        web.ignoring().antMatchers("/api");
     }
     @Bean
     @Override
