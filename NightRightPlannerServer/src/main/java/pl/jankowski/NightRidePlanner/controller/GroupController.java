@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
@@ -32,6 +33,7 @@ public class GroupController {
     }
 
     @GetMapping(value = "/hello")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String hello() {
      System.out.println("Hello");
         return "hello";
@@ -44,17 +46,20 @@ public class GroupController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public void updateGroup(@RequestBody GroupEntity group) {
         groupRepository.save(group);
     }
 
     @GetMapping("/getUserList")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody Set<UserEntity> getUsersInGroup(@RequestParam long id) {
         Optional<GroupEntity> groupOptional = groupRepository.findById(id);
         return groupOptional.map(GroupEntity::getUsersInGroup).orElse(null);
     }
 
     @PostMapping("/join")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public boolean joinGroup(@RequestBody JoinGroupBody body) {
         GroupEntity group = body.getGroup();
         UserEntity user = body.getUser();
@@ -68,6 +73,7 @@ public class GroupController {
     }
 
     @PostMapping("/createEvent")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public boolean createEvent(@RequestBody CreateEventBody body) {
         UserEntity user = body.getUser();
         EventEntity event = body.getEvent();
