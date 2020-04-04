@@ -1,0 +1,19 @@
+<head>
+  <base href="/">
+</head>
+
+<body>
+  <div>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>
+          <app-login [hidden]="session.isLogged"></app-login>
+          <app-menu [hidden]="!session.isLogged"></app-menu>
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <app-welcome [hidden]="session.isLogged"></app-welcome>
+  <router-outlet></router-outlet>
+</body>
+<!--<app-group-list></app-group-list>-->
