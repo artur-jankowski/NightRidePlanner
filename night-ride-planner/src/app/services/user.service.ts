@@ -9,7 +9,7 @@ export class UserService {
     this.http = http;
   }
 
-  backendUrl = 'http://localhost:8080/NightRidePlanner/';
+  backendUrl = 'http://localhost:8080/NightRidePlanner';
 
   public login(username: string, password: string) {
     return this.http.get(this.backendUrl + "/login?username=" + username + "&password=" + password);
