@@ -5,20 +5,19 @@ import { User } from '../model/user';
   providedIn: 'root'
 })
 export class SessionService {
-
-  loggedUser: User = new User();
+  token: string = "";
   isLogged: boolean = false;
   constructor() { }
 
-  public login(user: User) {
-    this.loggedUser = user;
-    console.log("Logged as user");
-    console.log(user);
-    this.isLogged = true;
+  public login(token: string) {
+    this.token = token;
+    if (token.length > 8) {
+      this.isLogged = true;
+    }
   }
 
   public logout() {
-    this.loggedUser = new User();
+    this.token = "";
     this.isLogged = false;
   }
 }

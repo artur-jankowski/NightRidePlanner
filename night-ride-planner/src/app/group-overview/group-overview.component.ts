@@ -21,7 +21,8 @@ export class GroupOverviewComponent implements OnInit {
   }
 
   join() {
-    this.groupService.joinGroup(this.session.loggedUser).subscribe((result: boolean) => { console.log(result); });
+    //TODO: has to be implemented back with using JWT token
+    // this.groupService.joinGroup(this.session.).subscribe((result: boolean) => { console.log(result); });
   }
 
 }
