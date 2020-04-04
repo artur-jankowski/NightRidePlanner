@@ -2,15 +2,13 @@ package pl.jankowski.NightRidePlanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
 import pl.jankowski.NightRidePlanner.entity.GroupEntity;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController(value = "/event")
@@ -24,9 +22,10 @@ public class EventController {
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public @ResponseBody EventEntity createEvent(@RequestBody long groupId, @RequestBody EventEntity event) {
+    public @ResponseBody
+    EventEntity createEvent(@RequestBody EventEntity event, @RequestParam Long groupId) {
         Optional<GroupEntity> groupOptional = groupRepository.findById(groupId);
-        if(groupOptional.isPresent()) {
+        if (groupOptional.isPresent()) {
             GroupEntity group = groupOptional.get();
             event = eventRepository.save(event);
             group.getEvents().add(event);
@@ -34,4 +33,6 @@ public class EventController {
         }
         return null;
     }
+
+    @GetMapping(value = "join")
 }

@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
 import pl.jankowski.NightRidePlanner.entity.GroupEntity;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
+import pl.jankowski.NightRidePlanner.repository.UserRepository;
 import pl.jankowski.NightRidePlanner.requestBody.JoinGroupBody;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -74,8 +77,8 @@ public class GroupController {
 
     @PostMapping("/createEvent")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public boolean createEvent(@RequestBody CreateEventBody body) {
-        UserEntity user = body.getUser();
+    public boolean createEvent(@RequestBody EventEntity body, Authentication authentication) {
+        UserEntity user = authentication.getName();
         EventEntity event = body.getEvent();
         GroupEntity group = body.getGroup();
 
@@ -87,20 +90,10 @@ public class GroupController {
         return false;
     }
 
-
-
-    private class CreateEventBody {
-        @Getter
-        @Setter
-        private GroupEntity group;
-
-        @Getter
-        @Setter
-        private UserEntity user;
-
-        @Getter
-        @Setter
-        private  EventEntity event;
+    @GetMapping(value = "/")
+    public @ResponseBody
+    List<EventEntity> getEvents(Long groupId) {
+        return eventRepository.findByGroupId(groupId);
     }
 
 }

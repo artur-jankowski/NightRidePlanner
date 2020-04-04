@@ -8,6 +8,8 @@ import lombok.Setter;
 import pl.jankowski.NightRidePlanner.util.EventType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Events")
@@ -39,8 +41,13 @@ public class EventEntity {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
+    @JoinColumn(name = "group", nullable = false)
     private GroupEntity group;
+
+    @Getter
+    @Setter
+    @OneToMany
+    private List<UserEntity> attendants = new ArrayList<>();
 
 
 }
