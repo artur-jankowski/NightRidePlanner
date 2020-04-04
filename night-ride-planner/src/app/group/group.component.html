@@ -1,0 +1,21 @@
+<head>
+    <base href="/groups">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm">
+            <mat-card>
+                <app-group-list></app-group-list>
+            </mat-card>
+        </div>
+        <div class="col-sm">
+            <mat-card>
+                <app-group-overview></app-group-overview>
+            </mat-card>
+        </div>
+    </div>
+    <br>
+    <button (click)="toggleCreate()">{{ createLabel }}</button>
+    <app-group-create [hidden]="!createMode"></app-group-create>
+</body>
