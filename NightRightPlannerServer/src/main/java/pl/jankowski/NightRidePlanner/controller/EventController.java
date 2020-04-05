@@ -3,10 +3,7 @@ package pl.jankowski.NightRidePlanner.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
 import pl.jankowski.NightRidePlanner.entity.GroupEntity;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
@@ -14,6 +11,9 @@ import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
 import pl.jankowski.NightRidePlanner.util.EventType;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController(value = "/event")
 public class EventController {
@@ -27,27 +27,34 @@ public class EventController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(value = "/create")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public @ResponseBody
-    EventEntity createEvent(@RequestBody long groupId, @RequestBody EventEntity event, Authentication authentication) throws Exception {
-        GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new Exception("Group does not exist"));
-        UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElse(null);
-        if (group.getUsersInGroup().contains(user)) {
-            if(event.getType() == null)
-            {
-                event.setType(EventType.GENERAL_MEET);
-            }
-            event = eventRepository.save(event);
-            group.getEvents().add(event);
-        } else {
-            throw new Exception("User does not belong to the group");
+    @PostMapping(value = "/{id}/join")
+    public void joinEvent(@PathVariable("id") Long id, Authentication authentication) throws Exception {
+        UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(() -> new Exception("User does not exist"));
+        EventEntity event = eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist"));
+        if (!event.getAttendants().contains(user)) {
+            event.getAttendants().add(user);
         }
-        return event;
+        eventRepository.save(event);
     }
 
-    @GetMapping(value = "/{id}/join")
-    public boolean joinEvent(Authentication authentication) {
-        return false;
+    @PostMapping(value = "/{id}/leave")
+    public void leaveEvent(@PathVariable("id") Long id, Authentication authentication) throws Exception {
+        UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(() -> new Exception("User does not exist"));
+        EventEntity event = eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist"));
+        if (!event.getAttendants().remove(user)) {
+            throw new Exception("User wasn't attending event");
+        }
+        eventRepository.save(event);
     }
+
+    @GetMapping(value = "/all")
+    public List<EventEntity> getAll() {
+        return eventRepository.findAll();
+    }
+
+    @GetMapping(value = "/{id}")
+    public EventEntity getEvent(@PathVariable("id") Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
 }
