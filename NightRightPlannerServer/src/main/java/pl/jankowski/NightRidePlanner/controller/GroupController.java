@@ -56,7 +56,7 @@ public class GroupController {
         return groupRepository.save(group).getId();
     }
 
-    @PostMapping("{id}/update")
+    @PostMapping("/{id}/update")
     @PreAuthorize("hasRole('ROLE_USER')")
     public boolean updateGroup(@PathVariable("id") Long id, @RequestBody GroupEntity groupNew, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));
@@ -71,7 +71,7 @@ public class GroupController {
         throw new Exception("User does not belong to the group");
     }
 
-    @GetMapping("{id}/getUserList")
+    @GetMapping("/{id}/getUserList")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody
     Set<UserEntity> getUsersInGroup(@PathVariable("id") Long id) {
@@ -79,7 +79,7 @@ public class GroupController {
         return groupOptional.map(GroupEntity::getUsersInGroup).orElse(null);
     }
 
-    @PostMapping("{id}/join")
+    @PostMapping("/{id}/join")
     @PreAuthorize("hasRole('ROLE_USER')")
     public boolean joinGroup(@PathVariable("id") Long id, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));
@@ -93,7 +93,7 @@ public class GroupController {
         return true;
     }
 
-    @PostMapping("{id}/createEvent")
+    @PostMapping("/{id}/createEvent")
     @PreAuthorize("hasRole('ROLE_USER')")
     public boolean createEvent(@PathVariable("id") Long id, @RequestBody EventEntity event, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));

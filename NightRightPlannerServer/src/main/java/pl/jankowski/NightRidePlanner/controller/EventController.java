@@ -5,17 +5,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
-import pl.jankowski.NightRidePlanner.entity.GroupEntity;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
-import pl.jankowski.NightRidePlanner.util.EventType;
 
 import java.util.List;
-import java.util.Set;
 
-@RestController(value = "/event")
+@RestController
+@RequestMapping("/event")
 public class EventController {
 
     @Autowired
@@ -28,6 +26,7 @@ public class EventController {
     private UserRepository userRepository;
 
     @PostMapping(value = "/{id}/join")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public void joinEvent(@PathVariable("id") Long id, Authentication authentication) throws Exception {
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(() -> new Exception("User does not exist"));
         EventEntity event = eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist"));
@@ -38,6 +37,7 @@ public class EventController {
     }
 
     @PostMapping(value = "/{id}/leave")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public void leaveEvent(@PathVariable("id") Long id, Authentication authentication) throws Exception {
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(() -> new Exception("User does not exist"));
         EventEntity event = eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist"));
@@ -52,7 +52,19 @@ public class EventController {
         return eventRepository.findAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @PostMapping(value = "/{id}/update")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public boolean updateEvent(@PathVariable("id") Long id, EventEntity event, Authentication authentication) throws Exception {
+        EventEntity oldEvent = eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist"));
+        if (oldEvent.getAttendants().contains(userRepository.findUserByUsername(authentication.getName()).orElseThrow(() -> new Exception("User does not belong to the event")))) {
+            oldEvent.setType(event.getType() == null ? oldEvent.getType() : event.getType());
+            oldEvent.setDescription(event.getDescription() == null ? oldEvent.getDescription() : event.getDescription());
+            oldEvent.setName(event.getName() == null? oldEvent.getName() : event.getName());
+        }
+        return true;
+    }
+
+    @GetMapping(value = "/{id}/")
     public EventEntity getEvent(@PathVariable("id") Long id) {
         return eventRepository.findById(id).orElse(null);
     }
