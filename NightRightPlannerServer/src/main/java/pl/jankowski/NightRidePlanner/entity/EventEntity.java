@@ -25,23 +25,19 @@ public class EventEntity {
 
     @Getter
     @Setter
-    @Column(name="type")
     private EventType type;
 
     @Getter
     @Setter
-    @Column(name = "name")
     private String name;
 
     @Getter
     @Setter
-    @Column(name = "description")
     private String description;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "group", nullable = false)
     private GroupEntity group;
 
     @Getter

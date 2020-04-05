@@ -1,0 +1,16 @@
+<div [hidden]="registerMode">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" [(ngModel)]="mUser.username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="mUser.password">
+            <button mat-button type="submit">Submit</button>
+            <button mat-button type="button" (click)="goToRegister()">Register</button>
+        </div>
+    </form>
+</div>
+<div [hidden]="!registerMode">
+    <button mat-button (click)="goToLogin()">Back to login</button>
+    <app-register></app-register>
+</div>
