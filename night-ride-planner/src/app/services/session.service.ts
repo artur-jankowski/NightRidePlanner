@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { User } from '../model/user';
 export class SessionService {
   token: string = "";
   isLogged: boolean = false;
+  currentUser: User = null;
   constructor() { }
 
   public login(token: string) {
@@ -14,6 +16,10 @@ export class SessionService {
     if (token.length > 8) {
       this.isLogged = true;
     }
+    var decoded = jwt_decode(token);
+    console.log(decoded);
+    this.currentUser = new User();
+    this.currentUser.username = decoded.sub;
   }
 
   public logout() {
