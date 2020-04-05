@@ -16,9 +16,9 @@ public class NightRidePlannerApplication extends SpringBootServletInitializer {
 		SpringApplication.run(NightRidePlannerApplication.class, args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(NightRidePlannerApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//		return builder.sources(NightRidePlannerApplication.class);
+//	}
 
 }
