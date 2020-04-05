@@ -55,7 +55,7 @@ public class UserService {
     public Optional<String> login(String username, String password) {
         Optional<String> token = Optional.empty();
         Optional<UserEntity> user = userRepository.findUserByUsername(username);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             token = Optional.of(jwtProvider.createToken(username, user.get().getUserInfo().getRoles()));
         }
@@ -76,7 +76,6 @@ public class UserService {
         return false;
     }
 
-    @PostMapping(value = "/update")
     public boolean updateProfile(UserEntity user, String password) {
         Optional<UserEntity> userOptional = userRepository.findUserByUsername(user.getUsername());
         if (userOptional.isPresent()) {
@@ -89,4 +88,8 @@ public class UserService {
         }
         return false;
     }
+
+    public UserEntity findByUsername(String username) {
+        return userRepository.findUserByUsername(username).orElse(null);
     }
+}

@@ -3,6 +3,7 @@ package pl.jankowski.NightRidePlanner.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.service.UserService;
@@ -42,13 +43,16 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public boolean changePassword(@RequestBody UserEntity user, @RequestBody String oldPassword, @RequestBody String newPassword) {
+    public boolean changePassword(@RequestParam String oldPassword, @RequestParam String newPassword, Authentication authentication) {
+        UserEntity user = userService.findByUsername(authentication.getName());
         return  userService.changePassword(user, oldPassword, newPassword);
     }
 
     @PostMapping(value = "/update")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public boolean updateProfile(@RequestBody UserEntity user, @RequestBody String password) {
+    public boolean updateProfile(@RequestBody UserEntity user, @RequestParam String password,  Authentication authentication) {
+        UserEntity oldUser = userService.findByUsername(authentication.getName());
+        user.setId(oldUser.getId());
         return userService.updateProfile(user, password);
     }
 }
