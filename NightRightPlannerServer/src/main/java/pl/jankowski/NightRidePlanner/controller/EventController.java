@@ -13,6 +13,7 @@ import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
+import pl.jankowski.NightRidePlanner.util.EventType;
 
 @RestController(value = "/event")
 public class EventController {
@@ -33,6 +34,10 @@ public class EventController {
         GroupEntity group = groupRepository.findById(groupId).orElseThrow(() -> new Exception("Group does not exist"));
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElse(null);
         if (group.getUsersInGroup().contains(user)) {
+            if(event.getType() == null)
+            {
+                event.setType(EventType.GENERAL_MEET);
+            }
             event = eventRepository.save(event);
             group.getEvents().add(event);
         } else {

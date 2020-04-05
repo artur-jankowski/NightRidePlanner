@@ -76,17 +76,22 @@ public class UserService {
         return false;
     }
 
-    public boolean updateProfile(UserEntity user, String password) {
-        Optional<UserEntity> userOptional = userRepository.findUserByUsername(user.getUsername());
-        if (userOptional.isPresent()) {
-            UserDetailsEntity details = userOptional.get().getUserInfo();
-            user.setId(userOptional.get().getId());
-            if (details.getPassword().equals(password)) {
-                userRepository.save(user);
-                return true;
-            }
+    public boolean updateProfile(UserEntity oldUser, UserEntity newUser, String password) throws Exception {
+        UserDetailsEntity details = userRepository.findUserByUsername(newUser.getUsername()).orElseThrow(() -> new Exception("User does not exist")).getUserInfo();
+        if (details.getPassword().equals(password)) {
+            oldUser.setDescription(newUser.getDescription() == null ? oldUser.getDescription() : newUser.getDescription());
+            oldUser.setUserInfo(setUserDetails(oldUser, newUser));
+            userRepository.save(oldUser);
+            return true;
         }
         return false;
+    }
+
+    private UserDetailsEntity setUserDetails(UserEntity oldUser, UserEntity newUser) {
+        UserDetailsEntity oldUserDetails = oldUser.getUserInfo();
+        UserDetailsEntity newUserDetails = newUser.getUserInfo();
+        oldUserDetails.setPassword(newUserDetails.getPassword() == null ? oldUserDetails.getPassword() : newUserDetails.getPassword());
+        return oldUserDetails;
     }
 
     public UserEntity findByUsername(String username) {

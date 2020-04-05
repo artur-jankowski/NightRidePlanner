@@ -35,6 +35,6 @@ public class GroupEntity {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "group")
+    @OneToMany
     private Set<EventEntity> events;
 }

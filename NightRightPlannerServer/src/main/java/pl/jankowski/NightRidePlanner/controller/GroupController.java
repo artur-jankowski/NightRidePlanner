@@ -62,8 +62,9 @@ public class GroupController {
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User doeas not exist"));
         if (group.getUsersInGroup().contains(user)) {
-            groupNew.setId(id);
-            groupRepository.save(groupNew);
+            group.setDescription(groupNew.getDescription() == null ? group.getDescription() : groupNew.getDescription());
+            group.setName(groupNew.getName() == null ? group.getName() : groupNew.getName());
+            groupRepository.save(group);
             return true;
         }
         throw new Exception("User does not belong to the group");
@@ -96,12 +97,13 @@ public class GroupController {
     public boolean createEvent(@PathVariable("id") Long id, @RequestBody EventEntity event, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User doeas not exist"));
+                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User does not exist"));
         if (!group.getUsersInGroup().contains(user)) {
             return false;
         }
         group.getEvents().add(event);
+        eventRepository.save(event);
         groupRepository.save(group);
-        return false;
+        return true;
     }
 }

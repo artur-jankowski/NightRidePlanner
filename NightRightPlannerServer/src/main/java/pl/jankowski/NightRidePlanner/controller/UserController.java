@@ -50,9 +50,8 @@ public class UserController {
 
     @PostMapping(value = "/update")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public boolean updateProfile(@RequestBody UserEntity user, @RequestParam String password,  Authentication authentication) {
+    public boolean updateProfile(@RequestBody UserEntity user, @RequestParam String password,  Authentication authentication) throws Exception {
         UserEntity oldUser = userService.findByUsername(authentication.getName());
-        user.setId(oldUser.getId());
-        return userService.updateProfile(user, password);
+        return userService.updateProfile(oldUser, user, password);
     }
 }
