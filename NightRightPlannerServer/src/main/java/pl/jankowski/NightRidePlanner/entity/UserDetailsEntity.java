@@ -23,12 +23,11 @@ public class UserDetailsEntity {
 
     @Getter
     @Setter
-    @Column(name = "password", nullable = false)
     private String password;
 
     @Getter
     @Setter
-    @Column(name = "role", nullable = false)
+    @Column(nullable = false)
     private HashSet<Role> roles = new HashSet<>();
 
     public void addRole(Role role) {
