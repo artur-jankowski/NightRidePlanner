@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "groups")
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupEntity {
@@ -22,21 +22,19 @@ public class GroupEntity {
 
     @Getter
     @Setter
-    @Column(name = "name")
     private String name;
 
     @Getter
     @Setter
-    @Column(name = "description")
     private String description;
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "groups")
-    private Set<UserEntity> usersInGroup = new HashSet<>();
+    @ManyToMany
+    private Set<UserEntity> usersInGroup;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "group")
-    private Set<EventEntity> events = new HashSet<>();
+    @OneToMany
+    private Set<EventEntity> events;
 }
