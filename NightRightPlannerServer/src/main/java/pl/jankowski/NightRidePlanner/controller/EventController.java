@@ -14,8 +14,6 @@ import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
 
-import java.util.Optional;
-
 @RestController(value = "/event")
 public class EventController {
 
