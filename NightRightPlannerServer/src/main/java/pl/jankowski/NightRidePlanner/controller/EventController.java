@@ -2,13 +2,13 @@ package pl.jankowski.NightRidePlanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
 import pl.jankowski.NightRidePlanner.entity.GroupEntity;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController(value = "/event")
@@ -34,5 +34,8 @@ public class EventController {
         return null;
     }
 
-    @GetMapping(value = "join")
+    @GetMapping(value = "/{id}/join")
+    public boolean joinEvent(Authentication authentication) {
+        return false;
+    }
 }
