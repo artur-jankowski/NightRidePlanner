@@ -7,8 +7,10 @@
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <span>
-          <app-login [hidden]="session.isLogged"></app-login>
-          <app-menu [hidden]="!session.isLogged"></app-menu>
+          <app-login *ngIf="!session.isLogged; else loggedIn"></app-login>
+          <ng-template #loggedIn>
+            <app-menu></app-menu>
+          </ng-template>
         </span>
       </mat-toolbar-row>
     </mat-toolbar>
