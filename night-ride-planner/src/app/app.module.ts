@@ -20,7 +20,6 @@ import { GroupCreateComponent } from './group-create/group-create.component';
 import { MenuComponent } from './menu/menu.component';
 import { GroupListComponent } from './group-list/group-list.component';
 import { RegisterComponent } from './register/register.component';
-import { CreateGroupComponent } from './create-group/create-group.component';
 import { GroupComponent } from './group/group.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -32,7 +31,7 @@ import { EventCreateComponent } from './event-create/event-create.component';
 
 const routes: Routes = [
   { path: 'groups', component: GroupComponent, canActivate: [LoginActivateGuard] },
-  { path: 'groups/create', component: CreateGroupComponent, canActivate: [LoginActivateGuard] },
+  { path: 'groups/create', component: GroupCreateComponent, canActivate: [LoginActivateGuard] },
   { path: 'user', component: UserOverviewComponent, canActivate: [LoginActivateGuard] },
   { path: 'event', component: AppComponent, canActivate: [LoginActivateGuard] },
   { path: 'event/create', component: EventCreateComponent, canActivate: [LoginActivateGuard] }
@@ -46,7 +45,6 @@ const routes: Routes = [
     GroupCreateComponent,
     GroupListComponent,
     RegisterComponent,
-    CreateGroupComponent,
     GroupComponent,
     MenuComponent,
     WelcomeComponent,

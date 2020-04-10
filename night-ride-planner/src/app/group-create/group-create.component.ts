@@ -1,6 +1,7 @@
 import { Component, OnInit, SystemJsNgModuleLoaderConfig } from '@angular/core';
 import { GroupService } from '../services/group.service';
 import { Group } from '../model/group';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-group-create',
@@ -8,18 +9,21 @@ import { Group } from '../model/group';
   styleUrls: ['./group-create.component.css']
 })
 export class GroupCreateComponent implements OnInit {
-  groupService: GroupService;
-  mGroup: Group = new Group();
 
-  constructor(groupService: GroupService) { 
-    this.groupService = groupService;
+  groupSection = this.formBuilder.group({
+    name: [''],
+    description: [''],
+    type: ['']
+  })
+
+  constructor(private groupService: GroupService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
   }
-  
-  onSubmit() {
-    this.groupService.createGroup(this.mGroup).subscribe((id:number) => console.log("You've created a group - id: "+ id));
+
+  create() {
+    this.groupService.createGroup(this.groupSection.value).subscribe((id: number) => console.log("You've created a group - id: " + id));
   }
 
 }
