@@ -9,7 +9,7 @@
     </ul>
     <button *ngIf="!test; else leaveTemplate" (click)="join()">join</button>
     <ng-template #leaveTemplate>
-        <button class="btn" (click)="leave()">Leave</button>
-        <a class="btn" routerLink="/event/create" routerLinkActive="active">Create event</a>
+        <button mat-button (click)="leave()">Leave</button>
+        <a mat-button routerLink="/event/create" routerLinkActive="active">Create event</a>
     </ng-template>
 </div>

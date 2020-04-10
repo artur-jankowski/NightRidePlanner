@@ -32,8 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.mUser);
-    console.log("The password is " + this.mUser.password + " and user is " + this.mUser.username);
     this.userService.login(this.mUser.username, this.mUser.password).subscribe((r: string) => {
       if (r.length > 8) {
         this.sessionService.login(r);

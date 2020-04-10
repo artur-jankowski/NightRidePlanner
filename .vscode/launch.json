@@ -14,7 +14,7 @@
             "request": "attach",
             "name": "Attach to Firefox",
             "url": "http://localhost:4200",
-            "port": 9223,
+            "port": 4200,
             "webRoot": "${workspaceFolder}/night-ride-planner"
         }
     ]

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -28,13 +28,14 @@ import { LoginActivateGuard } from './activates/login-activate.guard';
 import { UserOverviewComponent } from './user-overview/user-overview.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { EventCreateComponent } from './event-create/event-create.component';
 
 const routes: Routes = [
   { path: 'groups', component: GroupComponent, canActivate: [LoginActivateGuard] },
   { path: 'groups/create', component: CreateGroupComponent, canActivate: [LoginActivateGuard] },
   { path: 'user', component: UserOverviewComponent, canActivate: [LoginActivateGuard] },
   { path: 'event', component: AppComponent, canActivate: [LoginActivateGuard] },
-  { path: 'event/create', component: AppComponent, canActivate: [LoginActivateGuard] }
+  { path: 'event/create', component: EventCreateComponent, canActivate: [LoginActivateGuard] }
 ];
 
 @NgModule({
@@ -48,11 +49,13 @@ const routes: Routes = [
     CreateGroupComponent,
     GroupComponent,
     MenuComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    EventCreateComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes, { useHash: false }),
     HttpClientModule,
     BrowserAnimationsModule,

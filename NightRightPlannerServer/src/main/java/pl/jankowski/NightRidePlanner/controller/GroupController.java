@@ -44,7 +44,7 @@ public class GroupController {
     public Long createGroup(@RequestBody GroupEntity group, Authentication authentication) {
         Set<UserEntity> usersInGroup = new HashSet<>();
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User doeas not exist"));
+                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User does not exist"));
         usersInGroup.add(user);
         System.out.println("ADDED USER TO GROUP. USER: " + user.getUsername() + " GROUP: " + group.getName());
         group.setEvents(new HashSet<>());
@@ -61,7 +61,7 @@ public class GroupController {
     public boolean updateGroup(@PathVariable("id") Long id, @RequestBody GroupEntity groupNew, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User doeas not exist"));
+                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User does not exist"));
         if (group.getUsersInGroup().contains(user)) {
             group.setDescription(groupNew.getDescription() == null ? group.getDescription() : groupNew.getDescription());
             group.setName(groupNew.getName() == null ? group.getName() : groupNew.getName());
@@ -98,8 +98,8 @@ public class GroupController {
     public boolean createEvent(@PathVariable("id") Long id, @RequestBody EventEntity event, Authentication authentication) throws Exception {
         GroupEntity group = groupRepository.findById(id).orElseThrow(() -> new Exception("Group does not exist"));
         UserEntity user = userRepository.findUserByUsername(authentication.getName()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User does not exist"));
-        if (!group.getUsersInGroup().contains(user)) {
+                    () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User does not exist"));
+            if (!group.getUsersInGroup().contains(user)) {
             return false;
         }
         group.getEvents().add(event);

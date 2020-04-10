@@ -33,6 +33,8 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._subscriber.unsubscribe();
+    if (this._subscriber) {
+      this._subscriber.unsubscribe();
+    }
   }
 }
