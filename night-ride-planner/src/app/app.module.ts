@@ -31,8 +31,10 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 const routes: Routes = [
   { path: 'groups', component: GroupComponent, canActivate: [LoginActivateGuard] },
+  { path: 'groups/create', component: CreateGroupComponent, canActivate: [LoginActivateGuard] },
   { path: 'user', component: UserOverviewComponent, canActivate: [LoginActivateGuard] },
-  { path: 'event', component: AppComponent, canActivate: [LoginActivateGuard] }
+  { path: 'event', component: AppComponent, canActivate: [LoginActivateGuard] },
+  { path: 'event/create', component: AppComponent, canActivate: [LoginActivateGuard] }
 ];
 
 @NgModule({

@@ -4,5 +4,12 @@
     <br>
     {{groupService.currentGroup.description}}
     <br>
-    <button (click)="join()">join</button>
+    <ul>Users
+        <li *ngFor="let user of groupService.currentGroup.usersInGroup"> {{ user.username }}</li>
+    </ul>
+    <button *ngIf="test; else leaveTemplate" (click)="join()">join</button>
+    <ng-template #leaveTemplate>
+        <button class="btn" (click)="leave()">Leave</button>
+        <a class="btn" routerLink="/event/create" routerLinkActive="active">Create event</a>
+    </ng-template>
 </div>

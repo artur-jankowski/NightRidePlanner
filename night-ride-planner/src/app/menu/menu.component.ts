@@ -8,7 +8,7 @@ import { SessionService } from '../services/session.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private sessionService: SessionService) {
+  constructor(public sessionService: SessionService) {
   }
 
   ngOnInit(): void {
