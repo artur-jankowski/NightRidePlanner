@@ -12,6 +12,7 @@ export class GroupService {
 
   currentGroup: Group = new Group();
   groupChange: Subject<Group> = new Subject<Group>();
+  groupUpdated: Subject<Group> = new Subject<Group>();
 
   constructor(private http: HttpClient) {
     this.http = http;
@@ -24,14 +25,19 @@ export class GroupService {
   }
 
   public createGroup(model: Group) {
+    this.groupUpdated.next(model);
     return this.http.post(this.backendUrl + "/create", model);
   }
 
   public joinGroup() {
-    return this.http.post(this.backendUrl + "/" + this.currentGroup.id + "/join", null);
+    let resultValue;
+    this.http.post(this.backendUrl + "/" + this.currentGroup.id + "/join", null).subscribe((result: boolean) => { console.log(result); resultValue = result });
+    this.groupUpdated.next(this.currentGroup);
+    return resultValue;
   }
 
   public leaveGroup() {
+    this.groupUpdated.next(this.currentGroup);
     return this.http.post(this.backendUrl + "/" + this.currentGroup.id + "/leave", null);
   }
 

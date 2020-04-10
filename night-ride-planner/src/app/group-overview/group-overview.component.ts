@@ -25,10 +25,11 @@ export class GroupOverviewComponent implements OnInit, OnDestroy {
     this.test = this.containsUser();
   }
   ngOnDestroy(): void {
-    this._subscription.unsubscribe;
+    this._subscription.unsubscribe();
   }
   join() {
-    this.groupService.joinGroup().subscribe((result: boolean) => { console.log(result); });
+    this.groupService.joinGroup();
+    this.ngOnInit();
   }
 
   containsUser() {
@@ -38,6 +39,7 @@ export class GroupOverviewComponent implements OnInit, OnDestroy {
 
   leave() {
     this.groupService.leaveGroup();
+    this.ngOnInit();
   }
 
 }
