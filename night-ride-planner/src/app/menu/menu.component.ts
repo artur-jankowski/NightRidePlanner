@@ -17,9 +17,4 @@ export class MenuComponent implements OnInit {
   logout() {
     this.sessionService.logout();
   }
-
-  openGroup() {
-
-  }
-
 }

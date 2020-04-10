@@ -45,4 +45,10 @@ export class GroupService {
     this.currentGroup = group;
     this.groupChange.next(group);
   }
+
+  createEvent(eventBody: Event) {
+    this.groupUpdated.next(this.currentGroup);
+    let path = this.backendUrl + "/" + this.currentGroup.id + "/createEvent";
+    return this.http.post(path, eventBody)
+  }
 }
