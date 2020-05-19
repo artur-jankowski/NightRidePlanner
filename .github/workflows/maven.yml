@@ -21,6 +21,8 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn spring-boot:package
+      run: mvn spring-boot:run
     - name: Test with Maven
-      run: mvn spring-boot:test
+      run: mvn surefire:test
+    - name: Stop project after successful run
+      run: mvn spring-boot:stop
