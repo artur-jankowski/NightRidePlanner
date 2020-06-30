@@ -22,7 +22,10 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn spring-boot:run
+      working-directory: ./NightRightPlannerServer
     - name: Test with Maven
       run: mvn surefire:test
+      working-directory: ./NightRightPlannerServer
     - name: Stop project after successful run
       run: mvn spring-boot:stop
+      working-directory: ./NightRightPlannerServer
