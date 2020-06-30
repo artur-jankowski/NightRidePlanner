@@ -24,7 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd night-ride-planner
     - run: npm ci
+      working-directory: ./night-ride-planner
     - run: ng serve
+      working-directory: ./night-ride-planner
     - run: ng test
+      working-directory: ./night-ride-planner
