@@ -20,6 +20,6 @@ class UserControllerTest {
         assertEquals("hello", userController.hello());
     }
 
-    //This class methods returninvocation value of service methods - no need to test them in separate test class
+    //This class methods return invocation value of service methods - no need to test them in separate test class
 
 }
