@@ -6,10 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.Authentication;
-import pl.jankowski.NightRidePlanner.entity.EventEntity;
-import pl.jankowski.NightRidePlanner.entity.GroupEntity;
-import pl.jankowski.NightRidePlanner.entity.UserDetailsEntity;
-import pl.jankowski.NightRidePlanner.entity.UserEntity;
+import pl.jankowski.NightRidePlanner.entity.*;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
@@ -21,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class EventControllerTest {
@@ -54,6 +50,8 @@ class EventControllerTest {
 
     private GroupEntity testGroup1;
 
+    private LocalizationEntity localization;
+
     private ArrayList<EventEntity> events = new ArrayList<>();
 
 
@@ -67,9 +65,12 @@ class EventControllerTest {
         usersInGroup.add(testUser1);
         ArrayList<UserEntity> attendants = new ArrayList<>();
         attendants.add(testUser1);
+        localization = new LocalizationEntity(0L, 1000.0, -1000.0, testEvent1);
+        List<LocalizationEntity> localizations = new ArrayList<>();
+        localizations.add(localization);
         testGroup1 = new GroupEntity(0L, TEST_NAME_1, TEST_NAME_1, usersInGroup, new HashSet<>(events));
-        testEvent1 = new EventEntity(0L, EventType.GENERAL_MEET, TEST_NAME_1, TEST_NAME_1, testGroup1, attendants);
-        testEvent2 = new EventEntity(1L, EventType.GENERAL_MEET, TEST_NAME_2, TEST_NAME_2, testGroup1, attendants);
+        testEvent1 = new EventEntity(0L, EventType.GENERAL_MEET, TEST_NAME_1, TEST_NAME_1, testGroup1, attendants, localizations);
+        testEvent2 = new EventEntity(1L, EventType.GENERAL_MEET, TEST_NAME_2, TEST_NAME_2, testGroup1, attendants, new ArrayList<>());
         events.add(testEvent1);
         events.add(testEvent2);
         when(eventRepository.findById(0L)).thenReturn(Optional.of(testEvent1));
@@ -117,6 +118,13 @@ class EventControllerTest {
     @Test
     void getEventShouldReturnEvent() {
         assertEquals(testEvent1, eventController.getEvent(0L));
+    }
+
+    @Test
+    void getLocalizationsShouldReturnLocalizations() throws Exception {
+        List<LocalizationEntity> result = eventController.getLocalization(0L);
+        assertEquals(1, result.size());
+        assertTrue(result.contains(localization));
     }
 
 }
