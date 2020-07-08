@@ -1,0 +1,34 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./NightRightPlannerServer
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    depends_on: 
+      - db
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/nightrideplanner
+      SPRING_DATASOURCE_USERNAME: nrp-user
+      SPRING_DATASOURCE_PASSWORD: p@ssw0rd 
+    networks:
+      - backend
+      - frontend            
+      - elkStack
+  db:
+    image: postgres
+    env_file:
+      - postgres.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+volumes:
+  db-data:
+    
+networks:
+  backend:
+  frontend:
+  elkStack:

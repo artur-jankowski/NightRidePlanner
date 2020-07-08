@@ -8,12 +8,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Localizations")
+@Table(name = "localizations")
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalizationEntity {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -31,5 +29,5 @@ public class LocalizationEntity {
     @Getter
     @Setter
     @ManyToOne
-    private EventEntity eventEntity;
+    private EventEntity event;
 }
