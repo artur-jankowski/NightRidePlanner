@@ -45,5 +45,9 @@ public class EventEntity {
     @OneToMany
     private List<UserEntity> attendants = new ArrayList<>();
 
+    @Getter
+    @Setter
+    @OneToMany
+    private List<LocalizationEntity> localizations = new ArrayList<>();
 
 }

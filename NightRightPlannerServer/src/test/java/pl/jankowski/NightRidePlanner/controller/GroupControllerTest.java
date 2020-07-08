@@ -122,7 +122,7 @@ class GroupControllerTest {
 
     @Test
     void createEventShouldCreateAndAddEventToGroup() throws Exception {
-        EventEntity event = new EventEntity(0L, EventType.GENERAL_MEET, TEST_NAME_1, TEST_NAME_1, testGroup1, new ArrayList<>());
+        EventEntity event = new EventEntity(0L, EventType.GENERAL_MEET, TEST_NAME_1, TEST_NAME_1, testGroup1, new ArrayList<>(), new ArrayList<>());
         groupController.createEvent(0L, event, authentication);
         assertEquals(1, testGroup1.getEvents().size());
         assertTrue(testGroup1.getEvents().contains(event));

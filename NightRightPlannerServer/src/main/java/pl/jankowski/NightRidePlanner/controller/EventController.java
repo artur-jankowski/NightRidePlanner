@@ -5,12 +5,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.jankowski.NightRidePlanner.entity.EventEntity;
+import pl.jankowski.NightRidePlanner.entity.LocalizationEntity;
 import pl.jankowski.NightRidePlanner.entity.UserEntity;
 import pl.jankowski.NightRidePlanner.repository.EventRepository;
 import pl.jankowski.NightRidePlanner.repository.GroupRepository;
 import pl.jankowski.NightRidePlanner.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/event")
@@ -67,6 +69,11 @@ public class EventController {
     @GetMapping(value = "/{id}/")
     public EventEntity getEvent(@PathVariable("id") Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping(value = "/{id}/localization")
+    public List<LocalizationEntity> getLocalization(@PathVariable("id") Long id) throws Exception {
+        return eventRepository.findById(id).orElseThrow(() -> new Exception("Event does not exist")).getLocalizations();
     }
 
 }
