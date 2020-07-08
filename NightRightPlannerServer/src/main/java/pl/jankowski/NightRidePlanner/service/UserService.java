@@ -40,6 +40,10 @@ public class UserService {
     }
 
 
+    public UserEntity findByUsername(String username) {
+        return userRepository.findUserByUsername(username).orElse(null);
+    }
+
     public UserEntity createUser(String username, String password) {
         UserEntity user = new UserEntity();
         UserDetailsEntity userDetails = new UserDetailsEntity();
@@ -77,7 +81,7 @@ public class UserService {
     }
 
     public boolean updateProfile(UserEntity oldUser, UserEntity newUser, String password) throws Exception {
-        UserDetailsEntity details = userRepository.findUserByUsername(newUser.getUsername()).orElseThrow(() -> new Exception("User does not exist")).getUserInfo();
+        UserDetailsEntity details = userRepository.findUserByUsername(oldUser.getUsername()).orElseThrow(() -> new Exception("User does not exist")).getUserInfo();
         if (details.getPassword().equals(password)) {
             oldUser.setDescription(newUser.getDescription() == null ? oldUser.getDescription() : newUser.getDescription());
             oldUser.setUserInfo(setUserDetails(oldUser, newUser));
@@ -92,9 +96,5 @@ public class UserService {
         UserDetailsEntity newUserDetails = newUser.getUserInfo();
         oldUserDetails.setPassword(newUserDetails.getPassword() == null ? oldUserDetails.getPassword() : newUserDetails.getPassword());
         return oldUserDetails;
-    }
-
-    public UserEntity findByUsername(String username) {
-        return userRepository.findUserByUsername(username).orElse(null);
     }
 }
