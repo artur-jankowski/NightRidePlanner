@@ -48,7 +48,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>NightRidePlanner</name>
     <description>App helping creating car meets</description>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
