@@ -18,7 +18,7 @@ export class GroupService {
     this.http = http;
   }
 
-  backendUrl = 'http://localhost:8080/NightRidePlanner/group';
+  backendUrl = 'http://localhost:8080/group';
 
   public listGroups() {
     return this.http.get(this.backendUrl + "/all");

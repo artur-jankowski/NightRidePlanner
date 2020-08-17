@@ -1,0 +1,14 @@
+<div class>{{eventService.currentEvent.id}}
+    <br>
+    {{eventService.currentEvent.name}}
+    <br>
+    {{eventService.currentEvent.description}}
+    <br>
+    <ul>Users
+        <li *ngFor="let user of eventService.currentEvent.attendants"> {{ user.username }}</li>
+    </ul>
+    <button *ngIf="!test; else leaveTemplate" (click)="join()">join</button>
+    <ng-template #leaveTemplate>
+        <button mat-button (click)="leave()">Leave</button>
+    </ng-template>
+</div>
