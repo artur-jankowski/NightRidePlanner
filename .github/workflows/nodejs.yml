@@ -28,5 +28,5 @@ jobs:
       working-directory: ./night-ride-planner
     - run: npm install
       working-directory: ./night-ride-planner
-    - run: npm test
-      working-directory: ./night-ride-planner
+    #- run: npm test
+    #  working-directory: ./night-ride-planner
