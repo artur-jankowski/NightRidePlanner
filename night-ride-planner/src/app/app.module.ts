@@ -28,13 +28,17 @@ import { UserOverviewComponent } from './user-overview/user-overview.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { EventCreateComponent } from './event-create/event-create.component';
+import { EventListComponent } from './event-list/event-list.component';
+import { EventOverviewComponent } from './event-overview/event-overview.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   { path: 'groups', component: GroupComponent, canActivate: [LoginActivateGuard] },
   { path: 'groups/create', component: GroupCreateComponent, canActivate: [LoginActivateGuard] },
   { path: 'user', component: UserOverviewComponent, canActivate: [LoginActivateGuard] },
   { path: 'event', component: AppComponent, canActivate: [LoginActivateGuard] },
-  { path: 'event/create', component: EventCreateComponent, canActivate: [LoginActivateGuard] }
+  { path: 'event/create', component: EventCreateComponent, canActivate: [LoginActivateGuard] },
+  { path: 'event/list', component: EventComponent, canActivate: [LoginActivateGuard] }
 ];
 
 @NgModule({
@@ -48,7 +52,10 @@ const routes: Routes = [
     GroupComponent,
     MenuComponent,
     WelcomeComponent,
-    EventCreateComponent
+    EventCreateComponent,
+    EventListComponent,
+    EventOverviewComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

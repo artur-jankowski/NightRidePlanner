@@ -1,0 +1,5 @@
+<mat-list class="groupList">
+    <mat-list-item *ngFor="let event of events"> <button mat-raised-button color="primary"
+            (click)="openEventDetails(event.id)">
+            {{event.name}} </button></mat-list-item>
+</mat-list>

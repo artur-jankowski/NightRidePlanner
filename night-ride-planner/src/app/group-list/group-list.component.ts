@@ -1,7 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Group } from '../model/group';
 import { GroupService } from '../services/group.service';
-import { group } from '@angular/animations';
 import { Subscription } from 'rxjs';
 
 @Component({
